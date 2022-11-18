@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container authenticated">
+    <form th:action="@{/put-context}">
+        <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
+            <label for="inputPsNationalId">Identifiant national du Professionnel de santé <span class="form-required"
+                                                                                                title="Ce champ est requis">*</span></label>
+            <div class="form-group-wrap form-group-wrap--left">
+                <input class="form-control" aria-describedby="inputEmail-desc" name="inputPsNationalId" type="text"
+                       required="required"
+                       id="inputPsNationalId"/>
+            </div>
+            <p class="description" id="inputPsName-desc"></p>
+        </div>
+
+        <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
+            <label for="inputPatientINS">Numéro INS du patient <span class="form-required"
+                                                                     title="Ce champ est requis">*</span></label>
+            <div class="form-group-wrap form-group-wrap--left">
+                <input class="form-control" aria-describedby="inputEmail-desc" name="inputPsFirstName" type="text"
+                       required="required"
+                       id="inputPatientINS"/>
+            </div>
+            <p class="description" id="inputPs-desc"></p>
+        </div>
+        <button type="submit">Pousser le contexte</button>
+    </form>
+
+    <form th:action="@{/share}">
+        <button type="submit">Vérifier le contexte</button>
+    </form>
+</div>
+</body>
+</html>
