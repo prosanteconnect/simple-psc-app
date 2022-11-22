@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Application 2</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
 </head>
 <body>
-hello world
+<div>
+    <button class="psc_button" onclick="window.location.href='/secure/form'"></button>
+</div>
+<div>
+    <form>
+        <input type="button" onclick="location.href='/secure/form';" value="Accéder au formulaire"
+               class="btn btn-primary">
+    </form>
+</div>
 </body>
 </html>

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class SimpleFormController {
 
-    @GetMapping("/form")
+    @GetMapping("/secure/form")
     public String getSimpleFormPage() {
         return "form-page";
     }
