@@ -2,41 +2,100 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Formulaire</title>
+    <title>Enregistrement d'un nouvau patient</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function getFromCache() {
+            $.get("/secure/share", function (data) {
+                console.log(data)
+                if (data !== null && data.trim() !== "") {
+                    localStorage.setItem("psc-context", data)
+                    const btnFillForm = $("#btnFillForm");
+                    btnFillForm.removeAttr("disabled");
+                }
+            });
+        }
+
+        function putInCache(data) {
+            $.ajax({
+                url: '/secure/share',
+                type: 'PUT',
+                dataType: 'json',
+                contentType: 'application/json',
+                accepts: 'application/json',
+                data: JSON.stringify(data),
+                success: function(data, status, jqXHR){
+                },
+                error: function(jqXHR, status, errorThrown){
+                }
+            })
+        }
+
+        function fillForm() {
+            let jsonContext = localStorage.getItem("psc-context")
+            let {patient} = jQuery.parseJSON(jsonContext)
+
+            ({
+                firstName: $.inputPatientFirstName,
+                lastName: $.inputPatientLastName,
+                dateOfBirth: $.inputPatientDOB,
+                patientINS: $.inputPatientINS
+            } = patient);
+        }
+    </script>
 </head>
 <body>
-<div class="container authenticated">
-    <form th:action="@{/put-context}">
+<div>
+    <span>Enregistrement d'un nouveau patient</span>
+</div>
+<div>
+    <form>
         <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
-            <label for="inputPsNationalId">Identifiant national du Professionnel de santé <span class="form-required"
-                                                                                                title="Ce champ est requis">*</span></label>
+            <label for="inputPsNationalId">Prénom<span class="form-required"
+                                                       title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
-                <input class="form-control" aria-describedby="inputEmail-desc" name="inputPsNationalId" type="text"
-                       required="required"
-                       id="inputPsNationalId"/>
+                <input class="form-control" aria-describedby="inputPatientFirstName-desc" name="inputPatientFirstName"
+                       type="text" required="required" id="inputPatientFirstName"/>
             </div>
-            <p class="description" id="inputPsName-desc"></p>
+            <p class="description" id="inputPatientFirstName-desc"></p>
         </div>
 
         <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
-            <label for="inputPatientINS">Numéro INS du patient <span class="form-required"
-                                                                     title="Ce champ est requis">*</span></label>
+            <label for="inputPsNationalId">Nom<span class="form-required" title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
-                <input class="form-control" aria-describedby="inputEmail-desc" name="inputPsFirstName" type="text"
-                       required="required"
-                       id="inputPatientINS"/>
+                <input class="form-control" aria-describedby="inputPatientLastName" name="inputPatientLastName"
+                       type="text" required="required" id="inputPatientLastName"/>
             </div>
-            <p class="description" id="inputPs-desc"></p>
+            <p class="description" id="inputPatientLastName-desc"></p>
         </div>
-        <button type="submit">Pousser le contexte</button>
-    </form>
 
-    <form th:action="@{/share}">
-        <button type="submit">Vérifier le contexte</button>
+        <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
+            <label for="inputPsNationalId">Date de naissance<span class="form-required"
+                                                                  title="Ce champ est requis">*</span></label>
+            <div class="form-group-wrap form-group-wrap--left">
+                <input class="form-control" aria-describedby="inputPatientDOB" name="inputPatientDOB"
+                       type="text" required="required" id="inputPsNationalId"/>
+            </div>
+            <p class="description" id="inputPatientDOB-desc"></p>
+        </div>
+
+        <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
+            <label for="inputPatientINS">Numéro INS du patient<span class="form-required"
+                                                                    title="Ce champ est requis">*</span></label>
+            <div class="form-group-wrap form-group-wrap--left">
+                <input class="form-control" aria-describedby="inputPatientINS-desc" name="inputPatientINS"
+                       type="text" required="required" id="inputPatientINS"/>
+            </div>
+            <p class="description" id="inputPatientINS-desc"></p>
+        </div>
+        <div style="display: flex; flex-direction: row">
+            <button type="submit" onclick="getFromCache()">Vérifier le contexte</button>
+            <button type="submit" onclick="fillForm()" disabled="disabled" id="btnFillForm">Importer les données</button>
+            <button type="submit" onclick="putInCache()">Partager le contexte</button>
+        </div>
     </form>
 </div>
 </body>
