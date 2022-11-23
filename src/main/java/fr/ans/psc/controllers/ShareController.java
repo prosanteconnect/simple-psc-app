@@ -59,12 +59,8 @@ public class ShareController {
 
     private HttpEntity<String> prepareRequest(String requestBody) {
         HttpServletRequest incoming = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String bearer = "Bearer " + incoming.getHeader(ACCESS_TOKEN_HEADER);
-        String expiry = incoming.getHeader("oidc_access_token_expires");
-        System.out.println(incoming.getHeader(ACCESS_TOKEN_HEADER));
-        System.out.println(expiry);
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, bearer);
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + incoming.getHeader(ACCESS_TOKEN_HEADER));
         headers.add(HttpHeaders.ACCEPT, APPLICATION_JSON);
 
         if (requestBody != null) {
