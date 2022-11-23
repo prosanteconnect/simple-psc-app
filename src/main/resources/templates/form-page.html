@@ -9,6 +9,7 @@
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         function getFromCache() {
+            console.log('method getFromCache has been called')
             $.get("/secure/share", function (data) {
                 console.log(data)
                 if (data !== null && data.trim() !== "") {
@@ -58,7 +59,7 @@
                                                        title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
                 <input class="form-control" aria-describedby="inputPatientFirstName-desc" name="inputPatientFirstName"
-                       type="text" required="required" id="inputPatientFirstName"/>
+                       type="text" id="inputPatientFirstName"/>
             </div>
             <p class="description" id="inputPatientFirstName-desc"></p>
         </div>
@@ -67,7 +68,7 @@
             <label for="inputPsNationalId">Nom<span class="form-required" title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
                 <input class="form-control" aria-describedby="inputPatientLastName" name="inputPatientLastName"
-                       type="text" required="required" id="inputPatientLastName"/>
+                       type="text" id="inputPatientLastName"/>
             </div>
             <p class="description" id="inputPatientLastName-desc"></p>
         </div>
@@ -77,7 +78,7 @@
                                                                   title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
                 <input class="form-control" aria-describedby="inputPatientDOB" name="inputPatientDOB"
-                       type="text" required="required" id="inputPsNationalId"/>
+                       type="text" id="inputPsNationalId"/>
             </div>
             <p class="description" id="inputPatientDOB-desc"></p>
         </div>
@@ -87,16 +88,17 @@
                                                                     title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
                 <input class="form-control" aria-describedby="inputPatientINS-desc" name="inputPatientINS"
-                       type="text" required="required" id="inputPatientINS"/>
+                       type="text" id="inputPatientINS"/>
             </div>
             <p class="description" id="inputPatientINS-desc"></p>
         </div>
-        <div style="display: flex; flex-direction: row">
-            <button type="submit" onclick="getFromCache()">Vérifier le contexte</button>
-            <button type="submit" onclick="fillForm()" disabled="disabled" id="btnFillForm">Importer les données</button>
-            <button type="submit" onclick="putInCache()">Partager le contexte</button>
-        </div>
+
     </form>
+    <div style="display: flex; flex-direction: row">
+        <button type="submit" onclick="getFromCache()">Vérifier le contexte</button>
+        <button type="submit" onclick="fillForm()" disabled="disabled" id="btnFillForm">Importer les données</button>
+        <button type="submit" onclick="putInCache()">Partager le contexte</button>
+    </div>
 </div>
 </body>
 </html>

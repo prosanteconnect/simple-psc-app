@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.Objects;
 
-@RestController("/secure/share)")
+@RestController
 public class ShareController {
 
     private final RestTemplate restTemplate;
@@ -28,7 +28,7 @@ public class ShareController {
         this.restTemplate = new RestTemplate();
     }
 
-    @GetMapping(produces = APPLICATION_JSON)
+    @GetMapping(value = "/secure/share", produces = APPLICATION_JSON)
     public ResponseEntity<String> getContextInCache() {
         HttpEntity<String> entity = prepareRequest(null);
 
@@ -36,12 +36,13 @@ public class ShareController {
             String response = restTemplate.exchange(URI.create(shareApiBaseUrl), HttpMethod.GET, entity, String.class).getBody();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             // TODO : handle differently NOT_FOUND & errors ?
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
         }
     }
 
-    @PutMapping(produces = APPLICATION_JSON, consumes = APPLICATION_JSON)
+    @PutMapping(value = "/secure/share", produces = APPLICATION_JSON, consumes = APPLICATION_JSON)
     public ResponseEntity<String> putContextInCache(@RequestBody String jsonContext) {
         HttpEntity<String> entity = prepareRequest(jsonContext);
 
