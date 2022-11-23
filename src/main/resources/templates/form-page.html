@@ -12,7 +12,7 @@
             console.log('method getFromCache has been called')
             $.get("/secure/share", function (data) {
                 console.log(data)
-                if (data !== null && data.trim() !== "") {
+                if (data !== null && data !== "") {
                     localStorage.setItem("psc-context", data)
                     const btnFillForm = $("#btnFillForm");
                     btnFillForm.removeAttr("disabled");
