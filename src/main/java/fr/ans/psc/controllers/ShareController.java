@@ -12,6 +12,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Objects;
 
 @RestController
@@ -20,6 +22,7 @@ public class ShareController {
     private final RestTemplate restTemplate;
 
     private final String APPLICATION_JSON = MediaType.APPLICATION_JSON_VALUE;
+    private final String ACCESS_TOKEN_HEADER = "oidc_access_token";
 
     @Value("${psc.context.sharing.api.url}")
     private String shareApiBaseUrl;
@@ -36,9 +39,8 @@ public class ShareController {
             String response = restTemplate.exchange(URI.create(shareApiBaseUrl), HttpMethod.GET, entity, String.class).getBody();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
             // TODO : handle differently NOT_FOUND & errors ?
-            return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -57,8 +59,12 @@ public class ShareController {
 
     private HttpEntity<String> prepareRequest(String requestBody) {
         HttpServletRequest incoming = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        String bearer = "Bearer " + incoming.getHeader(ACCESS_TOKEN_HEADER);
+        String expiry = incoming.getHeader("oidc_access_token_expires");
+        System.out.println(incoming.getHeader(ACCESS_TOKEN_HEADER));
+        System.out.println(expiry);
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, incoming.getHeader(HttpHeaders.AUTHORIZATION));
+        headers.add(HttpHeaders.AUTHORIZATION, bearer);
         headers.add(HttpHeaders.ACCEPT, APPLICATION_JSON);
 
         if (requestBody != null) {
