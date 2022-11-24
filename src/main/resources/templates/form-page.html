@@ -13,7 +13,7 @@
             $.get("/secure/share", function (data) {
                 console.log(data)
                 if (data !== null && data !== "") {
-                    localStorage.setItem("psc-context", data)
+                    localStorage.setItem("psc-context", JSON.stringify(data))
                     const btnFillForm = $("#btnFillForm");
                     btnFillForm.removeAttr("disabled");
                 }
@@ -36,15 +36,13 @@
         }
 
         function fillForm() {
-            let jsonContext = localStorage.getItem("psc-context")
-            let {patient} = jQuery.parseJSON(jsonContext)
-
-            ({
-                firstName: $.inputPatientFirstName,
-                lastName: $.inputPatientLastName,
-                dateOfBirth: $.inputPatientDOB,
-                patientINS: $.inputPatientINS
-            } = patient);
+            const jsonContext = localStorage.getItem("psc-context")
+            const pscContext = JSON.parse(jsonContext)
+            const bag = pscContext.bag
+            const patient = bag.patient
+            const patientINS = patient.patientINS
+            console.log(patientINS)
+            $('#inputPatientINS').val(patientINS) 
         }
     </script>
 </head>
