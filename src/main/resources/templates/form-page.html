@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Enregistrement d'un nouvau patient</title>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -15,32 +16,32 @@
     <span>Enregistrement d'un nouveau patient</span>
 </div>
 <div>
-    <form action="">
+    <form id="patientForm">
         <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
-            <label for="inputPsNationalId">Prénom<span class="form-required"
+            <label for="inputPatientFirstName">Prénom<span class="form-required"
                                                        title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
-                <input class="form-control" aria-describedby="inputPatientFirstName-desc" name="inputPatientFirstName"
+                <input class="form-control" aria-describedby="inputPatientFirstName-desc" name="patientFirstName"
                        type="text" id="inputPatientFirstName"/>
             </div>
             <p class="description" id="inputPatientFirstName-desc"></p>
         </div>
 
         <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
-            <label for="inputPsNationalId">Nom<span class="form-required" title="Ce champ est requis">*</span></label>
+            <label for="inputPatientLastName">Nom<span class="form-required" title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
-                <input class="form-control" aria-describedby="inputPatientLastName" name="inputPatientLastName"
+                <input class="form-control" aria-describedby="inputPatientLastName" name="patientLastName"
                        type="text" id="inputPatientLastName"/>
             </div>
             <p class="description" id="inputPatientLastName-desc"></p>
         </div>
 
         <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
-            <label for="inputPsNationalId">Date de naissance<span class="form-required"
+            <label for="inputPatientDOB">Date de naissance<span class="form-required"
                                                                   title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
-                <input class="form-control" aria-describedby="inputPatientDOB" name="inputPatientDOB"
-                       type="text" id="inputPsNationalId"/>
+                <input class="form-control" aria-describedby="inputPatientDOB" name="patientDOB"
+                       type="text" id="inputPatientDOB"/>
             </div>
             <p class="description" id="inputPatientDOB-desc"></p>
         </div>
@@ -49,18 +50,17 @@
             <label for="inputPatientINS">Numéro INS du patient<span class="form-required"
                                                                     title="Ce champ est requis">*</span></label>
             <div class="form-group-wrap form-group-wrap--left">
-                <input class="form-control" aria-describedby="inputPatientINS-desc" name="inputPatientINS"
+                <input class="form-control" aria-describedby="inputPatientINS-desc" name="patientINS"
                        type="text" id="inputPatientINS"/>
             </div>
             <p class="description" id="inputPatientINS-desc"></p>
         </div>
-
+        <div style="display: flex; flex-direction: row; padding: 5px">
+            <button type="button" onclick="getFromCache()">Vérifier le contexte</button>
+            <button type="button" onclick="fillForm()" disabled="disabled" id="btnFillForm">Importer les données</button>
+            <button type="button" onclick="putInCache()">Partager le contexte</button>
+        </div>
     </form>
-    <div style="display: flex; flex-direction: row">
-        <button type="submit" onclick="getFromCache()">Vérifier le contexte</button>
-        <button type="submit" onclick="fillForm()" disabled="disabled" id="btnFillForm">Importer les données</button>
-        <button type="submit" onclick="putInCache()">Partager le contexte</button>
-    </div>
 </div>
 </body>
 </html>
