@@ -39,10 +39,9 @@
             const jsonContext = localStorage.getItem("psc-context")
             const pscContext = JSON.parse(jsonContext)
             const bag = pscContext.bag
-            const patient = bag.patient
-            const patientINS = patient.patientINS
-            console.log(patientINS)
-            $('#inputPatientINS').val(patientINS) 
+            $('#inputPatientFirstName').val(bag.patient.patientFirstName)
+            $('#inputPatientLastName').val(bag.patient.patientLastName)
+            $('#inputPatientINS').val(bag.patient.patientINS)
         }
     </script>
 </head>
