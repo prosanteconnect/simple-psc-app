@@ -7,50 +7,15 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        function getFromCache() {
-            console.log('method getFromCache has been called')
-            $.get("/secure/share", function (data) {
-                console.log(data)
-                if (data !== null && data !== "") {
-                    localStorage.setItem("psc-context", JSON.stringify(data))
-                    const btnFillForm = $("#btnFillForm");
-                    btnFillForm.removeAttr("disabled");
-                }
-            });
-        }
-
-        function putInCache(data) {
-            $.ajax({
-                url: '/secure/share',
-                type: 'PUT',
-                dataType: 'json',
-                contentType: 'application/json',
-                accepts: 'application/json',
-                data: JSON.stringify(data),
-                success: function(data, status, jqXHR){
-                },
-                error: function(jqXHR, status, errorThrown){
-                }
-            })
-        }
-
-        function fillForm() {
-            const jsonContext = localStorage.getItem("psc-context")
-            const pscContext = JSON.parse(jsonContext)
-            const bag = pscContext.bag
-            $('#inputPatientFirstName').val(bag.patient.patientFirstName)
-            $('#inputPatientLastName').val(bag.patient.patientLastName)
-            $('#inputPatientINS').val(bag.patient.patientINS)
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script type="text/javascript" src="/scripts/context-sharing.js"></script>
 </head>
 <body>
 <div>
     <span>Enregistrement d'un nouveau patient</span>
 </div>
 <div>
-    <form>
+    <form action="">
         <div class="form-group" style="max-width: 440px; display: flex; flex-direction: row">
             <label for="inputPsNationalId">Prénom<span class="form-required"
                                                        title="Ce champ est requis">*</span></label>
