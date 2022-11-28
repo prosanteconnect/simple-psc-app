@@ -21,7 +21,7 @@ function fillForm() {
     })
 }
 
-function putInCache() {
+function putInCache(schemaName) {
     let putPscContext = {};
 
     $.getJSON('../patient-info-mapping.json', function (data) {
@@ -30,22 +30,24 @@ function putInCache() {
                 _.set(putPscContext, value, document.getElementById(key).value)
             }
         }
-        console.log(putPscContext);
-    })
 
-    // // then put putPscContext to API before submitting form
-    // $.ajax({
-    //     url: '/secure/share',
-    //     type: 'PUT',
-    //     dataType: 'json',
-    //     contentType: 'application/json',
-    //     accepts: 'application/json',
-    //     data: JSON.stringify(putPscContext),
-    //     success: function(data, status, jqXHR){
-    //     },
-    //     error: function(jqXHR, status, errorThrown){
-    //     }
-    // })
+        _.set(putPscContext, "schemaId", schemaName)
+        console.log(putPscContext);
+
+        // then put putPscContext to API before submitting form
+        $.ajax({
+            url: '/secure/share',
+            type: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            accepts: 'application/json',
+            data: JSON.stringify(putPscContext),
+            success: function(data, status, jqXHR){
+            },
+            error: function(jqXHR, status, errorThrown){
+            }
+        })
+    })
 }
 
 

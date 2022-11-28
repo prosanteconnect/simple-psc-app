@@ -46,10 +46,11 @@ public class ShareController {
 
     @PutMapping(value = "/secure/share", produces = APPLICATION_JSON, consumes = APPLICATION_JSON)
     public ResponseEntity<String> putContextInCache(@RequestBody String jsonContext) {
+        System.out.println("here");
         HttpEntity<String> entity = prepareRequest(jsonContext);
 
         try {
-            String response = restTemplate.exchange(URI.create(shareApiBaseUrl), HttpMethod.POST, entity, String.class).getBody();
+            String response = restTemplate.exchange(URI.create(shareApiBaseUrl), HttpMethod.PUT, entity, String.class).getBody();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             // TODO : handle differently NOT_FOUND & errors ?
