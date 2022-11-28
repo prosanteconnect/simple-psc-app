@@ -44,6 +44,7 @@ public class ShareController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error while requesting ProSanteConnect context sharing API with root cause : {}", e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -55,10 +56,12 @@ public class ShareController {
 
         try {
             log.debug("calling ProSanteConnect API...");
+            log.debug(entity.getBody());
             String response = restTemplate.exchange(URI.create(shareApiBaseUrl), HttpMethod.PUT, entity, String.class).getBody();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error while requesting ProSanteConnect context sharing API with root cause : {}", e.getMessage());
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

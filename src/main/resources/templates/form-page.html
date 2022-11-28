@@ -297,8 +297,7 @@
                         <button type="button" class=" btn btn--plain btn--primary" onclick="getFromCache()" style="margin: 5px">Vérifier le contexte</button>
                         <button type="button" class=" btn btn--plain btn--primary" data-toggle="modal" data-target="#modal1" hidden style="margin: 5px">Afficher la modale</button>
                         <button type="button" class=" btn btn--plain btn--primary" onclick="fillForm()" disabled="disabled" id="btnFillForm" style="margin: 5px">Importer les données</button>
-<!--                        <button type="button" class=" btn btn&#45;&#45;plain btn&#45;&#45;primary" onclick="putInCache('patient-info')" style="margin: 5px">Partager le contexte</button>-->
-                        <button type="submit" class=" btn btn--plain btn--primary" style="margin: 5px">Partager le contexte</button>
+                        <button type="button" class=" btn btn--plain btn--primary" onclick="putInCache('patient-info', '/secure/patient/new')" style="margin: 5px">Partager le contexte</button>
                     </div>
                 </form>
             </div>
@@ -321,9 +320,13 @@
     <!--
         this script has to be added to trigger ProSanteConnect context sharing API call before submitting form
     -->
-<script>
-    $('patientForm').on('submit', putInCache('patient-info'))
-</script>
+<!--<script>-->
+<!--    $('patientForm').submit(function (e) {-->
+<!--        e.preventDefault()-->
+<!--        putInCache('patient-info', 'patientForm')-->
+<!--    })-->
+<!--    // $('patientForm').on('submit', putInCache('patient-info'))-->
+<!--</script>-->
 
 <!--<span class="badge badge-pill badge-success">!</span>-->
 </body>

@@ -14,4 +14,9 @@ public class PatientRecordingController {
                                  @RequestParam String patientINS) {
         return "/new-patient";
     }
+
+    @GetMapping()
+    public String navigate() {
+        return "/new-patient";
+    }
 }
