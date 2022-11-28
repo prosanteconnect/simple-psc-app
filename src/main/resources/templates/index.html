@@ -5,20 +5,48 @@
     <title>Application 2</title>
     <link rel="stylesheet" type="text/css" href="/style/style.css"/>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.typekit.net/jjx2ksb.css">
+    <link rel="stylesheet" href="/style/style-ans.css" type="text/css">
+    <link rel="stylesheet" href="/style/print.css" type="text/css" media="print">
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+
+    <script type="text/javascript" src="/script/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/script/vendor.js"></script>
+    <script type="text/javascript" src="/script/app.js"></script>
 </head>
 <body>
-<div>
-    <button class="psc_button" onclick="window.location.href='/secure/form'"></button>
+<div class="body-wrapper">
+    <header class="header header-principal" role="banner">
+        <div class="header-principal__inner">
+            <div class="header-principal-left">
+                <div class="logos">        <div class="logo logo--0">
+                    <a href="https://solidarites-sante.gouv.fr/">
+
+                        <img src="/img/logo-ministere.svg" alt="Ministère de la Santé et de la Prévention" width="107" height="62">
+
+                    </a>
+                </div>
+                    <div class="logo logo--1">
+                        <a href="/">
+
+                            <img src="/img/logo-ANS.svg" alt="Accueil Design System ANS" width="166" height="50">
+
+                        </a>
+                    </div>
+                </div>
+                <p class="header__title">Application 1</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="main" role="main" id="main" tabindex="-1">
+        <div class="container">
+            <h3>Pour accéder au formulaire, veuillez-vous authentifier</h3>
+            <hr>
+            <button class="psc_button" onclick="window.location.href='/secure/form'"></button>
+        </div>
+    </main>
 </div>
-<div>
-    <form>
-        <input type="button" onclick="location.href='/secure/form';" value="Accéder au formulaire"
-               class="btn btn-primary">
-    </form>
-</div>
+
 </body>
 </html>

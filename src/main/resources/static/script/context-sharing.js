@@ -40,7 +40,7 @@ function putInCache(schemaName) {
             type: 'PUT',
             dataType: 'json',
             contentType: 'application/json',
-            accepts: 'application/json',
+            // accepts: 'application/json',
             data: JSON.stringify(putPscContext),
             success: function(data, status, jqXHR){
             },
@@ -48,6 +48,7 @@ function putInCache(schemaName) {
             }
         })
     })
+    return true
 }
 
 

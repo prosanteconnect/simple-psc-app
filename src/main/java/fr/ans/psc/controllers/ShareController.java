@@ -1,5 +1,6 @@
 package fr.ans.psc.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import java.util.Iterator;
 import java.util.Objects;
 
 @RestController
+@Slf4j
 public class ShareController {
 
     private final RestTemplate restTemplate;
@@ -33,32 +35,36 @@ public class ShareController {
 
     @GetMapping(value = "/secure/share", produces = APPLICATION_JSON)
     public ResponseEntity<String> getContextInCache() {
+        log.debug("getting stored ProSanteConnect context...");
         HttpEntity<String> entity = prepareRequest(null);
 
         try {
+            log.debug("calling ProSanteConnect API...");
             String response = restTemplate.exchange(URI.create(shareApiBaseUrl), HttpMethod.GET, entity, String.class).getBody();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            // TODO : handle differently NOT_FOUND & errors ?
+            log.error("Error while requesting ProSanteConnect context sharing API with root cause : {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping(value = "/secure/share", produces = APPLICATION_JSON, consumes = APPLICATION_JSON)
     public ResponseEntity<String> putContextInCache(@RequestBody String jsonContext) {
-        System.out.println("here");
+        log.debug("putting context in ProSanteConnect Cache...");
         HttpEntity<String> entity = prepareRequest(jsonContext);
 
         try {
+            log.debug("calling ProSanteConnect API...");
             String response = restTemplate.exchange(URI.create(shareApiBaseUrl), HttpMethod.PUT, entity, String.class).getBody();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            // TODO : handle differently NOT_FOUND & errors ?
+            log.error("Error while requesting ProSanteConnect context sharing API with root cause : {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     private HttpEntity<String> prepareRequest(String requestBody) {
+        log.debug("retrieving access token...");
         HttpServletRequest incoming = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + incoming.getHeader(ACCESS_TOKEN_HEADER));
@@ -66,8 +72,10 @@ public class ShareController {
 
         if (requestBody != null) {
             headers.add(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON);
+            log.debug("request successfully prepared");
             return new HttpEntity<>(requestBody, headers);
         } else {
+            log.debug("request successfully prepared");
             return new HttpEntity<>(headers);
         }
     }
