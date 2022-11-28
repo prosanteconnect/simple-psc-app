@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/secure/patient/check-in")
+@RequestMapping("/secure/patient/new")
 public class PatientRecordingController {
 
     @PostMapping()
@@ -12,6 +12,6 @@ public class PatientRecordingController {
                                  @RequestParam String patientLastName,
                                  @RequestParam String patientDOB,
                                  @RequestParam String patientINS) {
-        return "/index";
+        return "/new-patient";
     }
 }
