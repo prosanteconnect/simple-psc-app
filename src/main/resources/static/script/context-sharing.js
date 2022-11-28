@@ -30,6 +30,7 @@ function putInCache() {
                 _.set(putPscContext, value, document.getElementById(key).value)
             }
         }
+        console.log(putPscContext);
     })
 
     // // then put putPscContext to API before submitting form
