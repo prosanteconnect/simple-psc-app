@@ -3,19 +3,15 @@ package fr.ans.psc.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -24,7 +20,6 @@ public class ShareController {
     private final RestTemplate restTemplate;
 
     private final String APPLICATION_JSON = MediaType.APPLICATION_JSON_VALUE;
-    private final String ACCESS_TOKEN_HEADER = "oidc_access_token";
 
     @Value("${psc.context.sharing.api.url}")
     private String shareApiBaseUrl;
@@ -34,9 +29,9 @@ public class ShareController {
     }
 
     @GetMapping(value = "/secure/share", produces = APPLICATION_JSON)
-    public ResponseEntity<String> getContextInCache() {
+    public ResponseEntity<String> getContextInCache(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient client) {
         log.debug("getting stored ProSanteConnect context...");
-        HttpEntity<String> entity = prepareRequest(null);
+        HttpEntity<String> entity = prepareRequest(client, null);
 
         try {
             log.debug("calling ProSanteConnect API...");
@@ -50,9 +45,9 @@ public class ShareController {
     }
 
     @PutMapping(value = "/secure/share", produces = APPLICATION_JSON, consumes = APPLICATION_JSON)
-    public ResponseEntity<String> putContextInCache(@RequestBody String jsonContext) {
+    public ResponseEntity<String> putContextInCache(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient client, @RequestBody String jsonContext) {
         log.debug("putting context in ProSanteConnect Cache...");
-        HttpEntity<String> entity = prepareRequest(jsonContext);
+        HttpEntity<String> entity = prepareRequest(client, jsonContext);
 
         try {
             log.debug("calling ProSanteConnect API...");
@@ -66,11 +61,12 @@ public class ShareController {
         }
     }
 
-    private HttpEntity<String> prepareRequest(String requestBody) {
+    private HttpEntity<String> prepareRequest(OAuth2AuthorizedClient client, String requestBody) {
         log.debug("retrieving access token...");
-        HttpServletRequest incoming = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        String accessToken = client.getAccessToken().getTokenValue();
+
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + incoming.getHeader(ACCESS_TOKEN_HEADER));
+        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
         headers.add(HttpHeaders.ACCEPT, APPLICATION_JSON);
 
         if (requestBody != null) {

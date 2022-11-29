@@ -29,7 +29,7 @@ public class SecurityConfig {
         http.oauth2Login(Customizer.withDefaults());
 
         http
-                .authorizeRequests().antMatchers("/").not().authenticated().and()
+                .authorizeRequests().antMatchers("/").permitAll().and()
                 .authorizeRequests().antMatchers("/logout").authenticated().and()
                 .authorizeRequests().antMatchers("/secure/**").authenticated().and()
 
