@@ -6,7 +6,7 @@ labels = {
 
 runner {
   enabled = true
-  profile = "share_context-${workspace.name}"
+  profile = "sharecontext-${workspace.name}"
   data_source "git" {
     url = "https://github.com/prosanteconnect/simple-psc-app.git"
     ref = "${workspace.name}"
