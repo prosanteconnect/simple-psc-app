@@ -1,4 +1,4 @@
-job "psc-context-sharing-DEMO_APP_1" {
+job "psc-context-sharing-demo-app-1" {
   datacenters = ["${datacenter}"]
   type = "service"
   namespace = "${nomad_namespace}"
