@@ -7,14 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/secure/patient/new")
 public class PatientRecordingController {
 
-    @PostMapping()
-    public String recordNewPatient(@RequestParam String patientFirstName,
-                                 @RequestParam String patientLastName,
-                                 @RequestParam String patientDOB,
-                                 @RequestParam String patientINS) {
-        return "/new-patient";
-    }
-
     @GetMapping()
     public String navigate() {
         return "/new-patient";

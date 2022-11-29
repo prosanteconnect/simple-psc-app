@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>fr.ans.psc</groupId>
-    <artifactId>simple-psc-app</artifactId>
+    <artifactId>app1</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>simple-psc-app</name>
+    <name>app1</name>
     <description>Simple app with form to call Context-sharing API</description>
     <properties>
         <java.version>11</java.version>
