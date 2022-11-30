@@ -8,6 +8,6 @@ public class PatientRecordingController {
 
     @GetMapping("/secure/patient")
     public String navigate() {
-        return "/new-patient";
+        return "new-patient";
     }
 }
