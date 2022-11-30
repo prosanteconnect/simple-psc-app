@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/secure/patient")
 public class PatientRecordingController {
 
-    @GetMapping()
+    @GetMapping("/new")
     public String navigate() {
         return "/new-patient";
     }
