@@ -4,10 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/secure/patient")
 public class PatientRecordingController {
 
-    @GetMapping()
+    @GetMapping("/secure/patient")
     public String navigate() {
         return "/new-patient";
     }
