@@ -66,7 +66,7 @@ spring.security.oauth2.client.registration.prosanteconnect.client-authentication
 spring.security.oauth2.client.provider.prosanteconnect.authorization-uri=https://wallet.bas.psc.esante.gouv.fr/auth
 spring.security.oauth2.client.provider.prosanteconnect.token-uri=https://auth.bas.psc.esante.gouv.fr/auth/realms/esante-wallet/protocol/openid-connect/token
 spring.security.oauth2.client.provider.prosanteconnect.user-info-uri=https://auth.bas.psc.esante.gouv.fr/auth/realms/esante-wallet/protocol/openid-connect/userinfo
-spring.security.oauth2.client.provider.prosanteconnect.user-name-attribute=given_name
+spring.security.oauth2.client.provider.prosanteconnect.user-name-attribute=preferred_username
 spring.security.oauth2.client.provider.prosanteconnect.jwk-set-uri=https://auth.bas.psc.esante.gouv.fr/auth/realms/esante-wallet/protocol/openid-connect/certs
 {{ end }}
 EOF
