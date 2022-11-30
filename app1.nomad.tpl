@@ -59,7 +59,7 @@ spring.security.oauth2.client.registration.prosanteconnect.clientSecret={{ .Data
 spring.security.oauth2.client.registration.prosanteconnect.provider=prosanteconnect
 spring.security.oauth2.client.registration.prosanteconnect.authorization-grant-type=authorization_code
 spring.security.oauth2.client.registration.prosanteconnect.client-name=prosanteconnect
-spring.security.oauth2.client.registration.prosanteconnect.redirect-uri=https://simple-app.demo.henix.asipsante.fr/login/oauth2/code/prosanteconnect
+spring.security.oauth2.client.registration.prosanteconnect.redirect-uri=https://{{ .Data.data.demo_app_1_public_hostname }}/login/oauth2/code/prosanteconnect
 spring.security.oauth2.client.registration.prosanteconnect.scope=scope_all
 spring.security.oauth2.client.registration.prosanteconnect.client-authentication-method=client_secret_post
 
