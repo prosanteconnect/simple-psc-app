@@ -22,6 +22,7 @@ function fillForm() {
 }
 
 function putInCache(schemaName, viewURL) {
+    const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
     let putPscContext = {};
 
     $.getJSON('../patient-info-mapping.json', function (data) {
@@ -35,12 +36,18 @@ function putInCache(schemaName, viewURL) {
         $.ajax({
             url: '/secure/share',
             type: 'PUT',
+            headers: {'X-XSRF-TOKEN': csrfToken},
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(putPscContext)
         })
-            .done(function(data) { window.location.href=viewURL })
-            .fail(function(jqXHR, textStatus, errorThrown) { window.location.href=viewURL })
+            .done(function(data) {
+                window.location.href=viewURL
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+                window.location.href=viewURL
+            })
     })
 }
 
