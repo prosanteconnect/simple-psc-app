@@ -1,18 +1,24 @@
 let pscContext;
+const mappingUrl = window.location.origin + '/patient-info-mapping.json'
 
 function getFromCache() {
-    $.get("/secure/share", function (data) {
+    $.get('/secure/share', function (data) {
         console.log(data)
-        if (data !== null && data !== "") {
+        if (data !== null && data !== '') {
             pscContext = data;
-            const btnFillForm = $("#btnFillForm");
-            btnFillForm.removeAttr("disabled");
+            const btnPreFill = $('#btnPreFill');
+            const contextTooltip = $('#contextTooltip')
+
+            btnPreFill.removeAttr('hidden');
+            contextTooltip.removeAttr('hidden')
+            document.getElementById('contextTooltip').setAttribute(
+                'title', JSON.stringify(pscContext, null, 2))
         }
     });
 }
 
 function fillForm() {
-    $.getJSON('../patient-info-mapping.json', function(data) {
+    $.getJSON(mappingUrl, function(data) {
         for (const [key, value] of Object.entries(data)) {
             if (document.getElementById(key)) {
                 $('#' + key).val(_.get(pscContext, value, ''))
@@ -25,13 +31,13 @@ function putInCache(schemaName, viewURL) {
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
     let putPscContext = {};
 
-    $.getJSON('../patient-info-mapping.json', function (data) {
+    $.getJSON(mappingUrl, function (data) {
         for (const [key, value] of Object.entries(data)) {
             if (document.getElementById(key)) {
                 _.set(putPscContext, value, document.getElementById(key).value)
             }
         }
-        _.set(putPscContext, "schemaId", schemaName)
+        _.set(putPscContext, 'schemaId', schemaName)
 
         $.ajax({
             url: '/secure/share',
