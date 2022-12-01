@@ -52,7 +52,7 @@ function putInCache(schemaName, viewURL) {
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown)
-                window.location.href=viewURL
+                // window.location.href=viewURL
             })
     })
 }
