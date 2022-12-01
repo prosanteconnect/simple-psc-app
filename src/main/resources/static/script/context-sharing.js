@@ -1,8 +1,8 @@
 let pscContext;
 const mappingUrl = window.location.origin + '/patient-info-mapping.json'
 
-function getFromCache() {
-    $.get('/secure/share', function (data) {
+function getFromCache(serverURL) {
+    $.get(serverURL, function (data) {
         console.log(data)
         if (data !== null && data !== '') {
             pscContext = data;
@@ -27,8 +27,7 @@ function fillForm() {
     })
 }
 
-function putInCache(schemaName, viewURL) {
-    const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+function putInCache(schemaName, serverURL, viewURL) {
     let putPscContext = {};
 
     $.getJSON(mappingUrl, function (data) {
@@ -40,20 +39,14 @@ function putInCache(schemaName, viewURL) {
         _.set(putPscContext, 'schemaId', schemaName)
 
         $.ajax({
-            url: '/secure/share',
+            url: serverURL,
             type: 'PUT',
-            headers: {'X-XSRF-TOKEN': csrfToken},
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(putPscContext)
         })
-            .done(function(data) {
-                window.location.href=viewURL
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                console.log(errorThrown)
-                // window.location.href=viewURL
-            })
+            .done(function(data) { window.location.href=viewURL })
+            .fail(function(jqXHR, textStatus, errorThrown) { window.location.href=viewURL })
     })
 }
 
